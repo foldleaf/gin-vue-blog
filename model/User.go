@@ -74,3 +74,15 @@ func DeleteUser(id int) int {
 	}
 	return errmsg.SUCCESS
 }
+
+// 编辑用户(密码除外)
+func EditUser(id int, data *User) int {
+	var maps = make(map[string]interface{})
+	maps["username"] = data.Username
+	maps["role"] = data.Role
+	err = db.Model(&User{}).Where("id=?", id).Updates(maps).Error
+	if err != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCESS
+}
